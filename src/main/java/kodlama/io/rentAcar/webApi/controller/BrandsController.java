@@ -1,9 +1,13 @@
 package kodlama.io.rentAcar.webApi.controller;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import kodlama.io.rentAcar.business.absractt.BrandService;
+import kodlama.io.rentAcar.business.request.CreateBrandRequest;
+import kodlama.io.rentAcar.business.response.GetAllBrandsResponse;
 import kodlama.io.rentAcar.entites.concretes.Brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +22,14 @@ public class BrandsController {
     public BrandsController(BrandService brandService) {
         this.brandService = brandService;
     }
-    @GetMapping("/getall")
-    public List<Brand> getAll(){
-        return brandService.getAll();
 
+    @GetMapping("/getall")
+    public List<GetAllBrandsResponse> getAll(){
+        return brandService.getAll();
+    }
+
+    @PostMapping("/add")
+    public void add(@RequestBody() CreateBrandRequest createBrandRequest){
+        this.brandService.add(createBrandRequest);
     }
 }
